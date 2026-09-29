@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#241b1b">
+<title>Tấm áo văn minh | Số đỏ</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap');
+:root{--ink:#241b1b;--paper:#f4ead7;--red:#9e292b;--gold:#c49a50;--muted:#76685b}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.14;z-index:5;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E")}
+header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:14px 5vw;background:rgba(36,27,27,.94);color:#f4ead7;border-bottom:1px solid #ffffff22}
+.brand{font-family:'Playfair Display',serif;font-weight:700;letter-spacing:.08em;font-size:14px}
+nav{display:flex;gap:7px;align-items:center;overflow-x:auto;max-width:68vw;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+nav button,.sound{border:1px solid #ffffff40;background:transparent;color:#f4ead7;padding:8px 11px;border-radius:2px;font:600 11px 'DM Sans';letter-spacing:.04em;cursor:pointer}
+nav button.active,nav button:hover,.sound:hover{background:var(--gold);color:#211919;border-color:var(--gold)}
+main{padding-top:58px}
+.page{min-height:calc(100vh - 58px);padding:8vh 10vw;display:none;position:relative;overflow:hidden}
+.page.active{display:flex;flex-direction:column;justify-content:center;animation:fade .5s ease}
+@keyframes fade{from{opacity:.2;transform:translateY(8px)}to{opacity:1;transform:none}}
+.kicker{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--red);font-weight:700}
+h1,h2,h3{font-family:'Playfair Display',serif}
+h1{font-size:clamp(54px,10vw,132px);line-height:.92;letter-spacing:-.055em;margin:22px 0;color:var(--paper);max-width:900px}
+h2{font-size:clamp(36px,6vw,72px);line-height:1.02;margin:12px 0 28px;letter-spacing:-.04em}
+h3{font-size:24px;margin:0 0 10px}
+p{line-height:1.8;max-width:760px}
+.cover{background:var(--ink);color:var(--paper);min-height:calc(100vh - 58px);padding-left:12vw}
+.cover .kicker{color:var(--gold)}
+.cover .sub{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(17px,2.5vw,25px);color:#d8c9b1}
+.cover .stamp{position:absolute;right:12vw;bottom:12vh;width:clamp(100px,17vw,220px);aspect-ratio:1;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-family:'Playfair Display';font-size:14px;text-align:center;transform:rotate(-13deg)}
+.cover .stamp:before{content:"";position:absolute;inset:9px;border:1px dashed var(--gold);border-radius:50%}
+.cover:after{content:"";position:absolute;width:42vw;height:42vw;border:1px solid #c49a5033;border-radius:50%;right:-12vw;top:15%;box-shadow:0 0 0 35px #c49a5009,0 0 0 70px #c49a5007}
+.cover h1,.cover p,.cover .kicker,.cover .sub{position:relative;z-index:1}
+.cover .edition{margin-top:48px;color:#a99a88;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.controls{display:flex;justify-content:space-between;align-items:center;margin-top:35px;padding-top:18px;border-top:1px solid #8f7b642e}
+.controls button{border:0;background:var(--ink);color:var(--paper);padding:12px 20px;font:600 12px 'DM Sans';cursor:pointer}
+.controls button:disabled{opacity:.25;cursor:default}
+.counter{font-size:11px;letter-spacing:.15em;color:var(--muted)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center}
+.quote{font-family:'Playfair Display';font-size:clamp(24px,3.3vw,42px);line-height:1.3;border-left:3px solid var(--red);padding-left:24px;color:var(--red)}
+.paper-card{background:#fff9ec;border:1px solid #c9b99e;padding:28px;box-shadow:8px 8px 0 #d9c9ad}
+.poem{background:#2b2221;color:#f4ead7}
+.poem .kicker{color:var(--gold)}
+.poem h2{color:var(--paper)}
+.poem-body{font-family:'Playfair Display',serif;font-size:clamp(18px,2.1vw,25px);line-height:1.75;white-space:pre-line;max-width:780px}
+.poem-body .red{color:#e5b65f}
+.columns{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:10px}
+.note{border-top:2px solid var(--red);padding:16px 4px}
+.note p{font-size:14px;margin:5px 0}
+.last{background:#e6d8be}
+footer{padding:18px 5vw;background:var(--ink);color:#b8a991;font-size:10px;letter-spacing:.12em;text-align:center}
+@media(max-width:700px){header{padding:12px 4vw}.brand{font-size:11px}nav{gap:3px}nav button{padding:7px 6px;font-size:9px}.sound{font-size:9px;padding:7px 6px}.page{padding:7vh 7vw}.two,.columns{grid-template-columns:1fr}.cover{padding-left:8vw}.cover .stamp{right:8vw;bottom:8vh}.cover .edition{margin-top:28px}.controls button{padding:10px 13px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">SỐ ĐỎ · VŨ TRỌNG PHỤNG</div>
+  <nav aria-label="Điều hướng">
+    <button class="active" data-go="0">Bìa</button>
+    <button data-go="1">Ý tưởng</button>
+    <button data-go="2">Thơ I</button>
+    <button data-go="3">Thơ II</button>
+    <button data-go="4">Phân tích</button>
+    <button data-go="5">Lời kết</button>
+  </nav>
+</header>
+<main>
+<section class="page cover active" id="p0">
+  <div class="kicker">Một chuyển thể sáng tạo từ tiểu thuyết trào phúng</div>
+  <h1>TẤM ÁO<br><span style="color:#c49a50">VĂN MINH</span></h1>
+  <p class="sub">Khi cái mới khoác lên mình chiếc áo hào nhoáng,<br>còn những giá trị bên trong thì rỗng tuếch.</p>
+  <div class="edition">Cảm hứng từ chương IV · “Những sự chế tạo của cuộc Âu hóa”</div>
+  <div class="edition" style="margin-top:12px;letter-spacing:.08em;line-height:1.9">Người thực hiện: Nguyễn Ngọc Thảo My<br>Mã số: 28 · Lớp: 12A01</div>
+  <div class="stamp">ÂU HÓA<br>HAY<br>HỀ HÓA?</div>
+</section>
+<section class="page" id="p1">
+  <div class="kicker">01 / Ý tưởng sáng tạo</div><h2>Mượn chiếc áo<br>để nhìn con người</h2>
+  <div class="two">
+    <div>
+      <p>Từ đoạn trích về tiệm may Âu Hóa, em chú ý đến cách những bộ trang phục được gắn với các tên gọi có vẻ tân tiến, sang trọng. Đằng sau vẻ ngoài ấy là sự bắt chước máy móc và lối sống chạy theo mốt.</p>
+      <p>Em chọn hình ảnh <b>“tấm áo”</b> làm biểu tượng cho vẻ văn minh được phô bày. Chiếc áo không chỉ che thân mà còn che đi sự lố lăng, giả tạo của những người quá sính ngoại.</p>
+    </div>
+    <div class="paper-card">
+      <div class="kicker">Thông điệp</div>
+      <div class="quote">“Văn minh” không nằm ở lớp vải bên ngoài, mà ở cách con người suy nghĩ và sống.</div>
+      <p style="font-size:12px;color:#76685b">Thể loại: thơ tự do · Giọng điệu: châm biếm, suy ngẫm</p>
+    </div>
+  </div>
+  <div class="controls"><button onclick="go(-1)">← Trước</button><span class="counter">02 / 06</span><button onclick="go(1)">Tiếp →</button></div>
+</section>
+<section class="page poem" id="p2">
+  <div class="kicker">02 / Tác phẩm chuyển thể · Phần I</div><h2>Tấm áo văn minh</h2>
+  <div class="poem-body">I. CỬA TIỆM ÂU HÓA
+
+Giữa phố phường đang tập làm sang,
+một cửa tiệm mở ra,
+bày chữ “Âu Hóa” như treo một tấm huy chương.
+Người ta tìm đến,
+không hẳn vì cần một manh áo,
+mà vì muốn mặc lên mình
+dáng vẻ của một thời đại khác.
+
+Kim chạm vào vải,
+kéo thành đường may mới.
+Còn những cái tên được thêu lên
+long lanh như lời quảng cáo:
+nghe qua đã tưởng
+mình vừa chạm tay vào văn minh.
+
+II. NHỮNG BỘ CÁNH TÂN THỜI
+
+Áo quần bỗng có quyền làm chứng,
+rằng người mặc nó đã đổi đời.
+Một dáng vẻ được gọi là tiến bộ,
+một kiểu cách được tung hô là hợp mốt;
+cái lố lăng nhờ thế
+cũng có thể bước ra đường
+với vẻ mặt rất đỗi tự hào.
+
+Người ta đo thân bằng thước,
+đo “văn minh” bằng lớp vải,
+mà quên hỏi lòng mình
+đã rộng thêm được chút nào chưa.</div>
+  <div class="controls"><button onclick="go(-1)">← Trước</button><span class="counter">03 / 06</span><button onclick="go(1)">Tiếp →</button></div>
+</section>
+<section class="page poem" id="p3">
+  <div class="kicker">03 / Tác phẩm chuyển thể · Phần II</div><h2>Phía sau lớp vải</h2>
+  <div class="poem-body">III. MIỆNG LƯỠI XUÂN TÓC ĐỎ
+
+Xuân từng đi rao thuốc dạo,
+đã hiểu sức mạnh của lời nói:
+chỉ cần giọng điệu thật chắc,
+một món hàng bình thường
+cũng có thể mang dáng dấp thần kỳ.
+
+Nay giữa tiệm may,
+anh lại đem ngón nghề ấy ra dùng.
+Lời qua miệng anh
+bỗng hóa thành tấm gương,
+để khách hàng soi vào
+và thấy mình sang trọng hơn,
+tân tiến hơn,
+đáng ngưỡng mộ hơn chính mình hôm qua.
+
+IV. MỘT CUỘC CÁCH MẠNG NỰC CƯỜI
+
+Cách mạng bắt đầu từ áo quần,
+từ những cái tên kêu vang,
+từ ánh mắt háo hức
+của người sợ mình bị bỏ lại phía sau.
+
+Cứ thế, cái giả khoác áo thật,
+sự rỗng không mang dáng vẻ thời thượng.
+Người ta cười mà tưởng mình đang tiến bước,
+người ta bắt chước mà ngỡ mình sáng tạo.
+
+V. SAU LỚP ÁO HÀO NHOÁNG
+
+Rồi khi ánh nhìn thôi ngắm nghía,
+khi lời quảng cáo lặng đi,
+còn lại gì dưới lớp vải mới?
+Một con người,
+vẫn cần sự hiểu biết để trưởng thành,
+cần lòng tự trọng để không cúi đầu
+trước mọi thứ lấp lánh.
+
+Áo có thể thay, thời trang có thể đổi,
+nhưng cái giả dối vẫn khoác mãi một màu.</div>
+  <div class="controls"><button onclick="go(-1)">← Trước</button><span class="counter">04 / 06</span><button onclick="go(1)">Tiếp →</button></div>
+</section>
+<section class="page" id="p4">
+  <div class="kicker">04 / Đọc và cảm nhận</div><h2>Tiếng cười<br>ẩn sau tấm áo</h2>
+  <div class="columns">
+    <div class="note"><h3>Giá trị nội dung</h3><p>Bài thơ phê phán thói sính hình thức, chạy theo cái gọi là văn minh mà không hiểu bản chất. Qua đó, tác phẩm gợi suy nghĩ về khoảng cách giữa vẻ ngoài và giá trị thật của con người.</p></div>
+    <div class="note"><h3>Hình tượng chiếc áo</h3><p>Chiếc áo là hình ảnh trung tâm, vừa gợi trang phục ở tiệm may Âu Hóa, vừa tượng trưng cho lớp vỏ hào nhoáng mà con người dùng để tạo dựng vẻ tiến bộ.</p></div>
+    <div class="note"><h3>Nghệ thuật trào phúng</h3><p>Sự đối lập giữa lời quảng cáo hoa mỹ và bản chất rỗng tuếch tạo nên tiếng cười mỉa mai. Cách dùng câu thơ tự do giúp giọng điệu linh hoạt, khi kể, khi châm biếm, khi suy ngẫm.</p></div>
+    <div class="note"><h3>Liên hệ nguyên tác</h3><p>Hình ảnh tiệm may Âu Hóa và Xuân Tóc Đỏ gợi lại tinh thần trào phúng trong <i>Số đỏ</i>: những giá trị giả tạo được tung hô như biểu hiện của tiến bộ. Bài thơ là sáng tác phóng tác, không phải thơ của Vũ Trọng Phụng.</p></div>
+  </div>
+  <div class="controls"><button onclick="go(-1)">← Trước</button><span class="counter">05 / 06</span><button onclick="go(1)">Tiếp →</button></div>
+</section>
+<section class="page last" id="p5">
+  <div class="kicker">05 / Lời kết</div><h2>Đừng để vẻ ngoài<br>nói thay giá trị</h2>
+  <div class="quote" style="max-width:760px">Một chiếc áo có thể khiến người ta trông khác đi, nhưng không thể tự nó làm nên một con người mới.</div>
+  <p>Qua việc chuyển thể đoạn trích thành thơ, em muốn thử nhìn tiếng cười trào phúng của Vũ Trọng Phụng từ một hình ảnh gần gũi: trang phục. Từ đó, em nhận ra rằng điều đáng quý không phải là chạy theo mọi xu hướng, mà là biết suy nghĩ, chọn lọc và sống chân thành.</p>
+  <p style="font-family:'Playfair Display';font-style:italic;font-size:21px">“Áo có thể thay, thời trang có thể đổi,<br>nhưng cái giả dối vẫn khoác mãi một màu.”</p>
+  <div class="controls"><button onclick="go(-1)">← Trước</button><span class="counter">06 / 06</span><button onclick="go(0)">Về bìa ↗</button></div>
+</section>
+</main>
+<footer>SẢN PHẨM SÁNG TẠO NGỮ VĂN · LẤY CẢM HỨNG TỪ SỐ ĐỎ</footer>
+<script>
+const pages=[...document.querySelectorAll('.page')], nav=[...document.querySelectorAll('nav button')];
+let current=0, audioOn=false, ctx=null, osc=null, gain=null;
+function show(n){current=(n+pages.length)%pages.length;pages.forEach((p,i)=>p.classList.toggle('active',i===current));nav.forEach((b,i)=>b.classList.toggle('active',i===current));window.scrollTo({top:0,behavior:'smooth'})}
+function go(d){show(d===0?0:Math.max(0,Math.min(pages.length-1,current+d)))}
+nav.forEach(b=>b.addEventListener('click',()=>show(Number(b.dataset.go))));
+document.querySelectorAll('.controls button').forEach((b,i)=>{
+  b.addEventListener('click',()=>{
+    const label=b.textContent.trim();
+    if(label.includes('Về bìa')) show(0);
+    else if(label.includes('Trước')) show(Math.max(0,current-1));
+    else if(label.includes('Tiếp')) show(Math.min(pages.length-1,current+1));
+  });
+});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)});
+
+</script>
+</body>
+</html>
